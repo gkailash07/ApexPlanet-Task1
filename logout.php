@@ -16,7 +16,5 @@ session_destroy();
         <p>Thank you for visiting.</p>
         <a href="login.php" class="login-again-btn">Login Again</a>
     </div>
-    <!--Developed by @Ritesh Kumar Jena -->
 </body>
 </html>
-
