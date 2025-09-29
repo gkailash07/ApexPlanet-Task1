@@ -65,7 +65,5 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <button type="submit" class="update-btn">Update</button>
   </form>
 </div>
-    <!--Developed by @Ritesh Kumar Jena -->
 </body>
 </html>
-
