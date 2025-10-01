@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $usernameOrEmail = strtolower(trim($_POST["username"]));
     $password = $_POST["password"];
 
-    // search case-insensitive because everything stored lowercase
+    // The SELECT * query will automatically fetch the new 'role' column
     $stmt = $pdo->prepare("
         SELECT * FROM users 
         WHERE username = ? OR email = ?
@@ -17,8 +17,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $user = $stmt->fetch();
 
     if ($user && password_verify($password, $user["password"])) {
+        // Set session variables upon successful login
         $_SESSION["user_id"] = $user["id"];
         $_SESSION["username"] = $user["username"];
+        $_SESSION["role"] = $user["role"]; // <-- TASK 4 CHANGE: Store user's role
+        
         header("Location: dashboard.php");
         exit;
     } else {
@@ -38,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <h2>Login</h2>
 
     <?php if (!empty($error)): ?>
-        <div class="error"><?php echo $error; ?></div>
+        <div class="error" style="color: red; margin-bottom: 15px;"><?php echo $error; ?></div>
     <?php endif; ?>
 
     <form method="post">
@@ -49,5 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     <p>Don’t have an account? <a href="register.php">Register here</a></p>
 </div>
+    <!-- Developed by @Ritesh Kumar Jena -->
 </body>
 </html>
+

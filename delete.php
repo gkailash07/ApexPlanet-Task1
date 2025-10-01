@@ -19,9 +19,14 @@ $stmt = $pdo->prepare("SELECT * FROM posts WHERE id = ?");
 $stmt->execute([$id]);
 $post = $stmt->fetch();
 
-if (!$post || $post["user_id"] != $_SESSION["user_id"]) {
-    die("❌ Unauthorized access.");
+// --- TASK 4: Role-Based Access Control ---
+$isOwner = ($post && $post["user_id"] == $_SESSION["user_id"]);
+$isAdmin = (isset($_SESSION["role"]) && $_SESSION["role"] === 'admin');
+
+if (!$isOwner && !$isAdmin) {
+    die("❌ Unauthorized access. You do not have permission to perform this action.");
 }
+// --- End Access Control ---
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (isset($_POST["confirm"])) {
@@ -48,5 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <a href="dashboard.php" class="cancel-btn">Cancel</a>
   </form>
 </div>
+    <!-- Developed by @Ritesh Kumar Jena -->
 </body>
 </html>
+

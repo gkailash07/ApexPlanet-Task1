@@ -19,9 +19,14 @@ $stmt = $pdo->prepare("SELECT * FROM posts WHERE id = ?");
 $stmt->execute([$id]);
 $post = $stmt->fetch();
 
-if (!$post || $post["user_id"] != $_SESSION["user_id"]) {
-    die("❌ Unauthorized access.");
+// --- TASK 4: Role-Based Access Control ---
+$isOwner = ($post && $post["user_id"] == $_SESSION["user_id"]);
+$isAdmin = (isset($_SESSION["role"]) && $_SESSION["role"] === 'admin');
+
+if (!$isOwner && !$isAdmin) {
+    die("❌ Unauthorized access. You do not have permission to perform this action.");
 }
+// --- End Access Control ---
 
 $error = "";
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -51,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <body>
 <div class="edit-form-container">
   <h2>Edit Post</h2>
-  <?php if ($error): ?><div style="color:red;"><?php echo $error; ?></div><?php endif; ?>
+  <?php if ($error): ?><div style="color:red; margin-bottom: 15px;"><?php echo $error; ?></div><?php endif; ?>
 
   <form method="post">
     <div class="form-group">
@@ -65,5 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <button type="submit" class="update-btn">Update</button>
   </form>
 </div>
+    <!-- Developed by @Ritesh Kumar Jena -->
 </body>
 </html>
+
