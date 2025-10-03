@@ -73,7 +73,5 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     <p>Already registered? <a href="login.php">Login here</a></p>
 </div>
-    <!-- Developed by @Ritesh Kumar Jena -->
 </body>
 </html>
-

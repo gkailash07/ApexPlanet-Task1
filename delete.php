@@ -53,7 +53,5 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <a href="dashboard.php" class="cancel-btn">Cancel</a>
   </form>
 </div>
-    <!-- Developed by @Ritesh Kumar Jena -->
 </body>
 </html>
-
